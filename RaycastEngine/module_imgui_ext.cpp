@@ -112,7 +112,7 @@ void ImGUI_NodeEditor_ShowAllNodeID()
         p1 = ax::NodeEditor::CanvasToScreen(p1);
 
         ImGuiTextBuffer builder;
-        builder.appendf("#%d", nodeId);
+        builder.appendf("#%d", static_cast<int>(nodeId.Get()));
 
         auto textSize = ImGui::CalcTextSize(builder.c_str());
         auto padding = ImVec2(2.0f, 2.0f);

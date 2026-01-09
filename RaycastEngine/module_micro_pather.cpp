@@ -28,7 +28,7 @@ public:
 		if (!result.wasOk()) luaL_error(L, result.errorMessage().c_str());
 	}
 
-	void PrintStateInfo(void* state) { }
+	void PrintStateInfo(void* state) override { }
 
 private:
 	lua_State* L = nullptr;

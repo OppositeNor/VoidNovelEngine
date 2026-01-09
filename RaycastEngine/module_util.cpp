@@ -1,16 +1,15 @@
 #include "module_util.h"
+#include "compatibility.h"
 #include "module_util_ext.h"
 
 #include <LuaBridge.h>
 
+#include <cstring>
 #include <vector>
 #include <codecvt>
 #include <fstream>
 #include <sstream>
 #include <filesystem>
-
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
 
 static std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> convert;
 
@@ -59,9 +58,10 @@ void init_util_module(lua_State* L)
 				.addFunction("GBKToUTF8", Util_GBKToUTF8)
 				.addFunction("UTF8ToGBK", Util_UTF8ToGBK)
 				.addFunction("UTF8ToUTF16", Util_UTF8ToUTF16)
+                // Only show console in Windows builds
 				.addFunction("SetConsoleShown", +[](bool flag)
 					{
-						ShowWindow(GetConsoleWindow(), flag ? SW_SHOW : SW_HIDE);
+                         show_console(flag);
 					})
 				.addFunction("LoadFileBuffer", +[](const char* path) -> CString*
 					{
